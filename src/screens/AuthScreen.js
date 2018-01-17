@@ -1,18 +1,40 @@
 import React from "react"
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import { connect } from "react-redux"
-import { Button } from "react-native-elements"
+import { Button, FormInput, FormLabel } from "react-native-elements"
 
 import client from "../client"
 
 class AuthScreen extends React.Component {
-  login = () => {
+  state = {}
+
+  login = async () => {
+    const auth = {
+      strategy: "local",
+      ...this.state,
+    }
+
+    try {
+      const result = await client.authenticate(auth)
+      console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {
     return (
       <View>
-        <Text>AuthScreen</Text>
+        <View>
+          <FormLabel>Email</FormLabel>
+          <FormInput onChangeText={email => this.setState({ email })} />
+        </View>
+
+        <View>
+          <FormLabel>Password</FormLabel>
+          <FormInput onChangeText={password => this.setState({ password })} />
+        </View>
+
         <Button
           title="Sign In"
           onPress={this.login}
