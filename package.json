@@ -23,6 +23,9 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@feathersjs/feathers": "^3.0.5",
+    "@feathersjs/rest-client": "^1.3.3",
+    "axios": "^0.17.1",
     "expo": "^23.0.4",
     "react": "16.0.0",
     "react-native": "0.50.3",
