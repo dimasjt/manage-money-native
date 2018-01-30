@@ -1,10 +1,14 @@
-import { StackNavigator } from "react-navigation"
+import { TabNavigator } from "react-navigation"
 
-import AuthScreen from "./screens/AuthScreen";
+import MainScreen from "./screens/MainScreen";
+import SettingsScreen from "./screens/SettingsScreen"
 
-const Routes = StackNavigator({
-  Auth: {
-    screen: AuthScreen,
+const Routes = TabNavigator({
+  Main: {
+    screen: MainScreen,
+  },
+  Settings: {
+    screen: SettingsScreen,
   },
 })
 
