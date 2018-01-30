@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Alert, Keyboard, AsyncStorage } from "react-native"
+import { View, Alert, Keyboard } from "react-native"
 import { connect } from "react-redux"
 import { Button, SocialIcon, FormInput, FormLabel, Text } from "react-native-elements"
 import { Facebook } from "expo"
@@ -7,6 +7,8 @@ import KeyboardSpacer from "react-native-keyboard-spacer"
 import PropTypes from "prop-types"
 
 import client from "../client"
+
+import { userLogged } from "../actions/user"
 
 class AuthScreen extends React.Component {
   state = {}
@@ -22,8 +24,7 @@ class AuthScreen extends React.Component {
       const payload = await client.passport.verifyJWT(result.accessToken)
       const user = await client.service("users").get(payload.userId)
 
-      await AsyncStorage.setItem("user", user)
-      this.props.navigation.navigate("Main")
+      this.props.dispatch(userLogged(user))
       Keyboard.dismiss()
     } catch (error) {
       Alert.alert("Sign in failed", error.message)
@@ -78,6 +79,7 @@ class AuthScreen extends React.Component {
 
 AuthScreen.propTypes = {
   navigation: PropTypes.object,
+  dispatch: PropTypes.func,
 }
 
 export default connect(state => state)(AuthScreen)
