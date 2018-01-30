@@ -1,5 +1,6 @@
 import {
   USER_LOGGED,
+  USER_LOGOUT,
 } from "../constants"
 
 const initialState = {
@@ -13,6 +14,11 @@ function user(state = initialState, action) {
       return {
         logged: true,
         data: action.payload,
+      }
+    case USER_LOGOUT:
+      return {
+        logged: false,
+        data: null,
       }
     default:
       return state

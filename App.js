@@ -2,7 +2,9 @@ import React from "react"
 import { Provider } from "react-redux"
 
 import Main from "./src/components/Main"
-import store from "./src/store"
+import configureStore from "./src/store"
+
+let store = configureStore()
 
 // only development
 let currentValue = store.getState()
