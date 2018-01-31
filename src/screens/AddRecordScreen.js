@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInput, ButtonGroup, Button } from 'react-native-elements'
 
+import client from "../client"
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -18,33 +19,57 @@ class SettingsScreen extends React.Component {
     },
   }
 
-  selectType = (index) => {
+  onChange = (key, val) => {
     this.setState({
       record: {
-        ...this.state,
-        type: index,
+        ...this.state.record,
+        [key]: val,
       },
     })
+  }
+
+  save = async () => {
+    const records = client.service("records")
+    try {
+      const result = await records.create({
+        ...this.state.record,
+        type: this.state.record.type === 0 ? "expense" : "income",
+      })
+      this.descriptionRef.clear()
+      this.priceRef.clear()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <ButtonGroup
-          onPress={this.selectType}
+          onPress={(index) => this.onChange("type", index)}
           buttons={["Expense", "Income"]}
           selectedIndex={this.state.record.type}
         />
 
         <FormInput
-          keyboardType="numeric"
+          placeholder="Description"
+          onChangeText={(val) => this.onChange("title", val)}
+          inputStyle={{ fontSize: 16, padding: 4 }}
+          textInputRef={(ref) => this.descriptionRef = ref}
           autoFocus
-          inputStyle={{ fontSize: 50, padding: 4 }}
+        />
+
+        <FormInput
+          keyboardType="numeric"
+          onChangeText={(val) => this.onChange("price", val)}
+          placeholder="Price"
+          inputStyle={{ fontSize: 16, padding: 4 }}
+          textInputRef={(ref) => this.priceRef = ref}
         />
 
         <Button
           title="Save"
-          onPress={() => { }}
+          onPress={this.save}
           style={{ marginTop: 20 }}
         />
       </View>
