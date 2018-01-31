@@ -1,7 +1,8 @@
 import React from "react"
 import { View, FlatList } from "react-native"
-import { Button, ButtonGroup, List, ListItem, Text } from "react-native-elements"
+import { Button, ButtonGroup, ListItem } from "react-native-elements"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import { getRecords } from "../actions/record"
 
@@ -28,13 +29,6 @@ class MainScreen extends React.Component {
     this.props.dispatch(getRecords())
   }
 
-  // renderItem = ({ item }) => (
-  //   <View style={{ flex: 1, borderBottomColor: "#ccc", borderBottomWidth: 1, height: 80, padding: 10 }}>
-  //     <Text style={{ fontSize: 16 }}>{item.title}</Text>
-  //     <Text>{item.price}</Text>
-  //   </View>
-  // )
-
   renderItem = ({ item }) => (
     <ListItem
       title={item.title}
@@ -59,6 +53,11 @@ class MainScreen extends React.Component {
       </View>
     )
   }
+}
+
+MainScreen.propTypes = {
+  dispatch: PropTypes.func,
+  records: PropTypes.object,
 }
 
 export default connect(state => state)(MainScreen)
