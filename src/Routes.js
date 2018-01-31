@@ -1,4 +1,6 @@
+import React from "react"
 import { TabNavigator, StackNavigator } from "react-navigation"
+import { Feather, Entypo } from "@expo/vector-icons"
 
 import MainScreen from "./screens/MainScreen";
 import AddRecordScreen from "./screens/AddRecordScreen"
@@ -16,6 +18,11 @@ const Routes = TabNavigator({
     }, {
         mode: "modal",
       }),
+    navigationOptions: {
+      tabBarIcon: (
+        <Entypo name="wallet" size={32} />
+      ),
+    },
   },
   Settings: {
     screen: StackNavigator({
@@ -23,6 +30,12 @@ const Routes = TabNavigator({
         screen: SettingsScreen,
       },
     }),
+    navigationOptions: {
+      tabBarIcon: (
+        <Feather name="settings" size={32} />
+      ),
+      tabBarLabel: null,
+    },
   },
 })
 
