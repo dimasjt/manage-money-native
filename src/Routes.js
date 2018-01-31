@@ -18,7 +18,11 @@ const Routes = TabNavigator({
       }),
   },
   Settings: {
-    screen: SettingsScreen,
+    screen: StackNavigator({
+      Settings: {
+        screen: SettingsScreen,
+      },
+    }),
   },
 })
 
