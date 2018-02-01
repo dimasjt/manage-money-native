@@ -3,6 +3,7 @@ import {
   RECORD_LOADING,
   RECORD_ERROR,
   ADD_RECORD,
+  DELETE_RECORD,
 } from "../constants"
 
 import client from "../client"
@@ -50,13 +51,12 @@ export const addRecord = (record) => dispatch => {
 
     records.create(data)
       .then(result => {
-        console.log(result)
         dispatch({
           type: ADD_RECORD,
           payload: result,
         })
 
-        resolve(data)
+        resolve(result)
       })
       .catch(error => {
         dispatch({
@@ -67,4 +67,22 @@ export const addRecord = (record) => dispatch => {
         reject(error)
       })
   }))
+}
+
+export const deleteRecord = (record, user) => dispatch => {
+  const records = client.service("records")
+
+  records.remove(record.id, { query: { userId: user.id } })
+    .then(() => {
+      dispatch({
+        type: DELETE_RECORD,
+        payload: record,
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: RECORD_ERROR,
+        payload: error,
+      })
+    })
 }

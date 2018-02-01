@@ -1,8 +1,10 @@
 import React from "react"
 import { View, FlatList, StyleSheet } from "react-native"
-import { ButtonGroup, ListItem, Text, Icon } from "react-native-elements"
+import { ButtonGroup, Text, Icon } from "react-native-elements"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+
+import Record from "../components/Record"
 
 import { getRecords } from "../actions/record"
 
@@ -44,10 +46,7 @@ class MainScreen extends React.Component {
   }
 
   renderItem = ({ item }) => (
-    <ListItem
-      title={item.title}
-      subtitle={`Rp.${item.price}`}
-    />
+    <Record record={item} />
   )
 
   render() {
