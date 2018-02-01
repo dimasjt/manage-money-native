@@ -6,6 +6,8 @@ import PropTypes from "prop-types"
 import { Ionicons } from "@expo/vector-icons"
 import { connect } from "react-redux"
 
+
+import money from "../util/money"
 import { deleteRecord } from "../actions/record"
 
 class Record extends React.Component {
@@ -27,7 +29,7 @@ class Record extends React.Component {
         <ListItem
           title={record.title}
           titleStyle={{ fontSize: 16 }}
-          subtitle={`Rp.${record.price}`}
+          subtitle={money(record.price)}
           hideChevron
         />
       </Swipeable>
