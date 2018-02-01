@@ -1,6 +1,7 @@
 import {
   RECORD_LIST,
   RECORD_LOADING,
+  ADD_RECORD,
 } from "../constants"
 
 const initialState = {
@@ -20,6 +21,11 @@ function records(state = initialState, action) {
       return {
         ...state,
         loading: true,
+      }
+    case ADD_RECORD:
+      return {
+        ...state,
+        data: state.data.concat(action.payload),
       }
     default:
       return state

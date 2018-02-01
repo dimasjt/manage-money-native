@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { FormInput, ButtonGroup, Button } from 'react-native-elements'
 import Datepicker from "react-native-datepicker"
 
-import client from "../client"
+import { addRecord } from "../actions/record"
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -31,12 +31,9 @@ class SettingsScreen extends React.Component {
   }
 
   save = async () => {
-    const records = client.service("records")
     try {
-      const result = await records.create({
-        ...this.state.record,
-        type: this.state.record.type === 0 ? "expense" : "income",
-      })
+      this.props.dispatch(addRecord(this.state.record))
+
       this.descriptionRef.clear()
       this.priceRef.clear()
     } catch (error) {
