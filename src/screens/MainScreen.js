@@ -19,8 +19,15 @@ class MainScreen extends React.Component {
     ),
   })
 
-  state = {
-    filter: 0,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      filter: {
+        type: 0,
+        userId: props.user.data.id,
+      },
+    }
   }
 
   componentWillMount() {
@@ -28,7 +35,12 @@ class MainScreen extends React.Component {
   }
 
   getRecords = () => {
-    this.props.dispatch(getRecords())
+    this.props.dispatch(getRecords(this.state.filter))
+  }
+
+  filterChange = (index) => {
+    this.setState({ filter: { ...this.state.filter, type: index } })
+    this.getRecords()
   }
 
   renderItem = ({ item }) => (
@@ -57,8 +69,8 @@ class MainScreen extends React.Component {
         <View style={{ flex: 2, zIndex: 10 }}>
           <ButtonGroup
             buttons={["All", "Expenses", "Incomes"]}
-            selectedIndex={this.state.filter}
-            onPress={(index) => this.setState({ filter: index })}
+            selectedIndex={this.state.filter.type}
+            onPress={this.filterChange}
           />
         </View>
 
@@ -92,6 +104,7 @@ const styles = StyleSheet.create({
 MainScreen.propTypes = {
   dispatch: PropTypes.func,
   records: PropTypes.object,
+  user: PropTypes.object,
 }
 
 export default connect(state => state)(MainScreen)
