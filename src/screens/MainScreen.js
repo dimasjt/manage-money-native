@@ -41,8 +41,7 @@ class MainScreen extends React.Component {
   }
 
   filterChange = (index) => {
-    this.setState({ filter: { ...this.state.filter, type: index } })
-    this.getRecords()
+    this.setState({ filter: { ...this.state.filter, type: index } }, this.getRecords)
   }
 
   renderItem = ({ item }) => (
