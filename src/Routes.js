@@ -4,6 +4,7 @@ import { Feather, Entypo } from "@expo/vector-icons"
 
 import MainScreen from "./screens/MainScreen";
 import AddRecordScreen from "./screens/AddRecordScreen"
+import EditRecordScreen from "./screens/EditRecordScreen"
 import SettingsScreen from "./screens/SettingsScreen"
 
 const Routes = TabNavigator({
@@ -14,6 +15,9 @@ const Routes = TabNavigator({
       },
       AddRecord: {
         screen: AddRecordScreen,
+      },
+      EditRecord: {
+        screen: EditRecordScreen,
       },
     }, {
         mode: "modal",

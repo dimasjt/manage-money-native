@@ -4,6 +4,7 @@ import {
   RECORD_ERROR,
   ADD_RECORD,
   DELETE_RECORD,
+  UPDATE_RECORD,
 } from "../constants"
 
 import client from "../client"
@@ -85,4 +86,24 @@ export const deleteRecord = (record, user) => dispatch => {
         payload: error,
       })
     })
+}
+
+export const updateRecord = (record) => dispatch => {
+  return (new Promise((resolve, reject) => {
+    const records = client.service("records")
+    client.update(record.id, record)
+      .then(result => {
+        console.log("result")
+        dispatch({
+          type: UPDATE_RECORD,
+          payload: result,
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: RECORD_ERROR,
+          payload: error,
+        })
+      })
+  })
 }

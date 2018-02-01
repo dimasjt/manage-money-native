@@ -45,7 +45,7 @@ class MainScreen extends React.Component {
   }
 
   renderItem = ({ item }) => (
-    <Record record={item} />
+    <Record record={item} navigation={this.props.navigation} />
   )
 
   render() {
@@ -103,6 +103,7 @@ MainScreen.propTypes = {
   dispatch: PropTypes.func,
   records: PropTypes.object,
   user: PropTypes.object,
+  navigation: PropTypes.object,
 }
 
 export default connect(state => state)(MainScreen)

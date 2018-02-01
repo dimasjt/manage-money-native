@@ -6,18 +6,31 @@ import PropTypes from "prop-types"
 import RecordForm from "../components/RecordForm"
 import { addRecord } from "../actions/record"
 
+const defaultState = {
+  type: 0,
+  price: 0,
+  title: "",
+  date: new Date(),
+}
+
 class SettingsScreen extends React.Component {
   static navigationOptions = {
-    title: "Add Record",
+    title: "Edit Record",
   }
 
-  state = {
-    record: {
-      type: 0,
-      price: 0,
-      title: "",
-      date: new Date(),
-    },
+  constructor(props) {
+    super(props)
+
+    const { params } = props.navigation.state
+    this.state = {
+      record: {
+        ...defaultState,
+        ...params.record,
+        type: params.record.type === "expense" ? 0 : 1,
+        date: new Date(params.record.createdAt),
+      },
+    }
+
   }
 
   onChange = (key, val) => {
@@ -53,6 +66,7 @@ class SettingsScreen extends React.Component {
 
 SettingsScreen.propTypes = {
   dispatch: PropTypes.func,
+  navigation: PropTypes.object,
 }
 
 export default connect(state => state)(SettingsScreen)
