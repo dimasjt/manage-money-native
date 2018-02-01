@@ -1,6 +1,6 @@
 import React from "react"
 import { View, FlatList, StyleSheet } from "react-native"
-import { Button, ButtonGroup, ListItem, Text } from "react-native-elements"
+import { ButtonGroup, ListItem, Text, Icon } from "react-native-elements"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
@@ -10,9 +10,11 @@ class MainScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Records",
     headerRight: (
-      <Button
-        title="Add"
+      <Icon
+        name="plus"
+        type="entypo"
         onPress={() => navigation.navigate("AddRecord")}
+        style={{ padding: 10, marginRight: 10 }}
       />
     ),
   })
