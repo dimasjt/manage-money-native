@@ -3,6 +3,7 @@ import { View } from "react-native"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInput, ButtonGroup, Button } from 'react-native-elements'
+import Datepicker from "react-native-datepicker"
 
 import client from "../client"
 
@@ -16,6 +17,7 @@ class SettingsScreen extends React.Component {
       type: 0,
       price: 0,
       title: "",
+      date: new Date(),
     },
   }
 
@@ -66,6 +68,17 @@ class SettingsScreen extends React.Component {
           inputStyle={{ fontSize: 16, padding: 4 }}
           textInputRef={(ref) => this.priceRef = ref}
         />
+
+        <View style={{ padding: 10 }}>
+          <Datepicker
+            date={this.state.record.date}
+            confirmBtnText="Done"
+            cancelBtnText="Cancel"
+            onDateChange={(date) => this.onChange("date", date)}
+            showIcon={false}
+            style={{ width: "100%" }}
+          />
+        </View>
 
         <Button
           title="Save"
