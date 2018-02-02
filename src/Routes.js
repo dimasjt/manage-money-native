@@ -13,6 +13,9 @@ const Routes = TabNavigator({
     screen: StackNavigator({
       Main: {
         screen: MainScreen,
+        navigationOptions: {
+          tabBarLabel: "Dashboard",
+        },
       },
       AddRecord: {
         screen: AddRecordScreen,

@@ -5,6 +5,7 @@ import { Constants } from "expo"
 import Picker from "react-native-simple-picker"
 import moment from "moment"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import styles from "../styles/records"
 import Record from "../components/Record"
@@ -12,6 +13,10 @@ import Record from "../components/Record"
 class RecordsScreen extends React.Component {
   state = {
     month: 2,
+  }
+
+  monthChange = (opt) => {
+    this.setState({ month: opt })
   }
 
   render() {
@@ -26,7 +31,7 @@ class RecordsScreen extends React.Component {
             labels={moment.months()}
             options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
             ref={ref => this.pickerRef = ref}
-            onSubmit={(opt) => this.setState({ month: opt })}
+            onSubmit={this.monthChange}
           />
         </View>
 
@@ -42,6 +47,11 @@ class RecordsScreen extends React.Component {
       </View>
     )
   }
+}
+
+RecordsScreen.propTypes = {
+  records: PropTypes.object,
+  navigation: PropTypes.object,
 }
 
 export default connect(state => state)(RecordsScreen)
