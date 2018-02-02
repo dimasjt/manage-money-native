@@ -41,7 +41,20 @@ class MainScreen extends React.Component {
   }
 
   filterChange = (index) => {
-    this.setState({ filter: { ...this.state.filter, type: index } }, this.getRecords)
+    this.setState({ filter: { ...this.state.filter, type: index } })
+  }
+
+  filteredRecords = () => {
+    return this.props.records.data.filter((record) => {
+      switch (this.state.filter.type) {
+        case 1:
+          return record.type === "expense"
+        case 2:
+          return record.type === "income"
+        default:
+          return true
+      }
+    })
   }
 
   renderItem = ({ item }) => (
@@ -74,7 +87,7 @@ class MainScreen extends React.Component {
 
         <View style={{ flex: 10 }}>
           <FlatList
-            data={this.props.records.data}
+            data={this.filteredRecords()}
             renderItem={this.renderItem}
             keyExtractor={(item) => item.id}
           />
