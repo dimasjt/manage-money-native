@@ -68,12 +68,12 @@ class MainScreen extends React.Component {
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <View style={{ flex: 3, margin: 10 }}>
           <View style={[{ flexDirection: "row" }, styles.card]}>
-            <View style={{ flex: 1 }}>
-              <Text h4>Expense</Text>
+            <View style={styles.cardItem}>
+              <Text h4 style={styles.cardItemText}>Expense</Text>
               <Text>{money(this.props.totalExpenses)}</Text>
             </View>
-            <View style={{ flex: 1 }}>
-              <Text h4>Income</Text>
+            <View style={styles.cardItem}>
+              <Text h4 style={styles.cardItemText}>Income</Text>
               <Text>{money(this.props.totalIncomes)}</Text>
             </View>
           </View>
@@ -109,10 +109,19 @@ const styles = StyleSheet.create({
     },
     shadowColor: "#000000",
     shadowRadius: 4,
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.2,
     borderRadius: 5,
     padding: 10,
     flex: 1,
+  },
+  cardItem: {
+    alignContent: "center",
+    alignItems: "center",
+    flex: 1,
+    padding: 5,
+  },
+  cardItemText: {
+    paddingBottom: 8,
   },
 })
 
@@ -121,6 +130,8 @@ MainScreen.propTypes = {
   records: PropTypes.object,
   user: PropTypes.object,
   navigation: PropTypes.object,
+  totalIncomes: PropTypes.number,
+  totalExpenses: PropTypes.number,
 }
 
 export default connect(state => ({
