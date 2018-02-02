@@ -6,6 +6,8 @@ import PropTypes from "prop-types"
 
 import Record from "../components/Record"
 
+import { calculateExpenses, calculateIncomes } from "../util/record_calculation"
+import money from "../util/money"
 import { getRecords } from "../actions/record"
 
 class MainScreen extends React.Component {
@@ -68,11 +70,11 @@ class MainScreen extends React.Component {
           <View style={[{ flexDirection: "row" }, styles.card]}>
             <View style={{ flex: 1 }}>
               <Text h4>Expense</Text>
-              <Text>Rp. 10.000.000</Text>
+              <Text>{money(this.props.totalExpenses)}</Text>
             </View>
             <View style={{ flex: 1 }}>
               <Text h4>Income</Text>
-              <Text>Rp. 20.000.000</Text>
+              <Text>{money(this.props.totalIncomes)}</Text>
             </View>
           </View>
         </View>
@@ -121,4 +123,8 @@ MainScreen.propTypes = {
   navigation: PropTypes.object,
 }
 
-export default connect(state => state)(MainScreen)
+export default connect(state => ({
+  ...state,
+  totalIncomes: calculateIncomes(state.records.data),
+  totalExpenses: calculateExpenses(state.records.data),
+}))(MainScreen)
