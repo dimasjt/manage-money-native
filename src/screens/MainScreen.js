@@ -3,6 +3,7 @@ import { View, FlatList, StyleSheet } from "react-native"
 import { ButtonGroup, Text, Icon } from "react-native-elements"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import ActionButton from "react-native-action-button"
 
 import Record from "../components/Record"
 
@@ -11,17 +12,9 @@ import money from "../util/money"
 import { getRecords } from "../actions/record"
 
 class MainScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = {
     title: "This Month",
-    headerRight: (
-      <Icon
-        name="plus"
-        type="entypo"
-        onPress={() => navigation.navigate("AddRecord")}
-        style={{ padding: 10, marginRight: 10 }}
-      />
-    ),
-  })
+  }
 
   constructor(props) {
     super(props)
@@ -103,6 +96,10 @@ class MainScreen extends React.Component {
             ListEmptyComponent={emptyRecords}
           />
         </View>
+
+        <ActionButton
+          onPress={() => this.props.navigation.navigate("AddRecord")}
+        />
       </View>
     )
   }
