@@ -12,7 +12,7 @@ import { getRecords } from "../actions/record"
 
 class MainScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: "Records",
+    title: "This Month",
     headerRight: (
       <Icon
         name="plus"
@@ -88,13 +88,19 @@ class MainScreen extends React.Component {
         </View>
 
         <View style={{ flex: 10 }}>
-          <FlatList
-            data={this.filteredRecords()}
-            renderItem={this.renderItem}
-            keyExtractor={(item) => item.id}
-            refreshing={this.props.records.loading}
-            onRefresh={this.getRecords}
-          />
+          {this.props.records.data.length ?
+            <FlatList
+              data={this.filteredRecords()}
+              renderItem={this.renderItem}
+              keyExtractor={(item) => item.id}
+              refreshing={this.props.records.loading}
+              onRefresh={this.getRecords}
+            />
+            :
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <Text style={{ fontSize: 20 }}>There are no records.</Text>
+            </View>
+          }
         </View>
       </View>
     )
