@@ -6,6 +6,7 @@ import MainScreen from "./screens/MainScreen";
 import AddRecordScreen from "./screens/AddRecordScreen"
 import EditRecordScreen from "./screens/EditRecordScreen"
 import SettingsScreen from "./screens/SettingsScreen"
+import RecordsScreen from "./screens/RecordsScreen"
 
 const Routes = TabNavigator({
   Main: {
@@ -25,6 +26,14 @@ const Routes = TabNavigator({
     navigationOptions: {
       tabBarIcon: (
         <Entypo name="wallet" size={32} />
+      ),
+    },
+  },
+  Records: {
+    screen: RecordsScreen,
+    navigationOptions: {
+      tabBarIcon: (
+        <Entypo name="list" size={32} />
       ),
     },
   },
