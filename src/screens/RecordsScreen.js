@@ -1,17 +1,47 @@
 import React from "react"
-import { View } from "react-native"
+import { View, TouchableOpacity as TOpacity, FlatList } from "react-native"
 import { Text } from "react-native-elements"
+import { Constants } from "expo"
+import Picker from "react-native-simple-picker"
+import moment from "moment"
+import { connect } from "react-redux"
+
+import styles from "../styles/records"
+import Record from "../components/Record"
 
 class RecordsScreen extends React.Component {
+  state = {
+    month: 2,
+  }
+
   render() {
     return (
-      <View>
-        <Text>
-          Hello
-        </Text>
+      <View style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
+        <View style={styles.header}>
+          <TOpacity onPress={() => this.pickerRef.show()}>
+            <Text h3>October</Text>
+          </TOpacity>
+
+          <Picker
+            labels={moment.months()}
+            options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+            ref={ref => this.pickerRef = ref}
+            onSubmit={(opt) => this.setState({ month: opt })}
+          />
+        </View>
+
+        <View style={{ flex: 8 }}>
+          <FlatList
+            data={this.props.records.data}
+            keyExtractor={(item) => item.id}
+            refreshing={this.props.records.loading}
+            onRefresh={this.getRecords}
+            renderItem={({ item }) => <Record record={item} navigation={this.props.navigation} />}
+          />
+        </View>
       </View>
     )
   }
 }
 
-export default RecordsScreen
+export default connect(state => state)(RecordsScreen)

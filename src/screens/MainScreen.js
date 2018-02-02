@@ -1,6 +1,6 @@
 import React from "react"
-import { View, FlatList, StyleSheet } from "react-native"
-import { ButtonGroup, Text, Icon } from "react-native-elements"
+import { View, FlatList } from "react-native"
+import { ButtonGroup, Text } from "react-native-elements"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import ActionButton from "react-native-action-button"
@@ -10,6 +10,7 @@ import Record from "../components/Record"
 import { calculateExpenses, calculateIncomes } from "../util/record_calculation"
 import money from "../util/money"
 import { getRecords } from "../actions/record"
+import styles from "../styles/main"
 
 class MainScreen extends React.Component {
   static navigationOptions = {
@@ -104,30 +105,6 @@ class MainScreen extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  card: {
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowColor: "#000000",
-    shadowRadius: 4,
-    shadowOpacity: 0.2,
-    borderRadius: 5,
-    padding: 10,
-    flex: 1,
-  },
-  cardItem: {
-    alignContent: "center",
-    alignItems: "center",
-    flex: 1,
-    padding: 5,
-  },
-  cardItemText: {
-    paddingBottom: 8,
-  },
-})
 
 MainScreen.propTypes = {
   dispatch: PropTypes.func,
