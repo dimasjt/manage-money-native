@@ -27,17 +27,17 @@ const Routes = TabNavigator({
         mode: "modal",
       }),
     navigationOptions: {
-      tabBarIcon: (
-        <Entypo name="wallet" size={32} />
-      ),
+      tabBarIcon({ tintColor }) { // eslint-disable-line react/prop-types
+        return <Entypo name="wallet" size={32} color={tintColor} />
+      },
     },
   },
   Records: {
     screen: RecordsScreen,
     navigationOptions: {
-      tabBarIcon: (
-        <Entypo name="list" size={32} />
-      ),
+      tabBarIcon({ tintColor }) { // eslint-disable-line react/prop-types
+        return <Entypo name="list" size={32} color={tintColor} />
+      },
     },
   },
   Settings: {
@@ -47,9 +47,9 @@ const Routes = TabNavigator({
       },
     }),
     navigationOptions: {
-      tabBarIcon: (
-        <Feather name="settings" size={32} />
-      ),
+      tabBarIcon({ tintColor }) { // eslint-disable-line react/prop-types
+        return <Feather name="settings" size={32} color={tintColor} />
+      },
       tabBarLabel: null,
     },
   },
