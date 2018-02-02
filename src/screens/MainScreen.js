@@ -90,6 +90,8 @@ class MainScreen extends React.Component {
             data={this.filteredRecords()}
             renderItem={this.renderItem}
             keyExtractor={(item) => item.id}
+            refreshing={this.props.records.loading}
+            onRefresh={this.getRecords}
           />
         </View>
       </View>
