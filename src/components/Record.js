@@ -27,9 +27,6 @@ class Record extends React.Component {
       <Touch key={0} style={{ backgroundColor: "#DC3023", flex: 1, padding: 12, paddingLeft: 28 }} onPress={this.onDelete}>
         <Ionicons name="ios-trash-outline" size={28} style={{ color: "white" }} />
       </Touch>,
-      <Touch key={1} style={{ backgroundColor: "#3498db", flex: 1, padding: 12, paddingLeft: 28 }} onPress={this.onEdit}>
-        <Ionicons name="ios-create-outline" size={28} style={{ color: "white" }} />
-      </Touch>,
     ]
 
     return (
@@ -38,6 +35,8 @@ class Record extends React.Component {
           title={record.title}
           titleStyle={{ fontSize: 16 }}
           subtitle={money(record.price)}
+          onPress={this.onEdit}
+          underlayColor="#eee"
           hideChevron
         />
       </Swipeable>
