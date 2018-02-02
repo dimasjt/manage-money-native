@@ -64,6 +64,12 @@ class MainScreen extends React.Component {
   )
 
   render() {
+    const emptyRecords = (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ fontSize: 20 }}>There are no records.</Text>
+      </View>
+    )
+
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <View style={{ flex: 3, margin: 10 }}>
@@ -88,19 +94,14 @@ class MainScreen extends React.Component {
         </View>
 
         <View style={{ flex: 10 }}>
-          {this.props.records.data.length ?
-            <FlatList
-              data={this.filteredRecords()}
-              renderItem={this.renderItem}
-              keyExtractor={(item) => item.id}
-              refreshing={this.props.records.loading}
-              onRefresh={this.getRecords}
-            />
-            :
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-              <Text style={{ fontSize: 20 }}>There are no records.</Text>
-            </View>
-          }
+          <FlatList
+            data={this.filteredRecords()}
+            renderItem={this.renderItem}
+            keyExtractor={(item) => item.id}
+            refreshing={this.props.records.loading}
+            onRefresh={this.getRecords}
+            ListEmptyComponent={emptyRecords}
+          />
         </View>
       </View>
     )
