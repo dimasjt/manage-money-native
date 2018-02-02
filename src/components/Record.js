@@ -17,6 +17,7 @@ class Record extends React.Component {
 
   onEdit = () => {
     this.props.navigation.navigate("EditRecord", { record: this.props.record })
+    this.swipeRef.recenter()
   }
 
   render() {
@@ -32,7 +33,7 @@ class Record extends React.Component {
     ]
 
     return (
-      <Swipeable rightButtons={rightButtons}>
+      <Swipeable rightButtons={rightButtons} onRef={ref => this.swipeRef = ref}>
         <ListItem
           title={record.title}
           titleStyle={{ fontSize: 16 }}

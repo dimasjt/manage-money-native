@@ -3,6 +3,7 @@ import {
   RECORD_LOADING,
   ADD_RECORD,
   DELETE_RECORD,
+  UPDATE_RECORD,
 } from "../constants"
 
 const initialState = {
@@ -32,6 +33,20 @@ function records(state = initialState, action) {
       return {
         ...state,
         data: state.data.filter((record) => record.id !== action.payload.id),
+      }
+    case UPDATE_RECORD:
+      return {
+        ...state,
+        data: state.data.map(record => {
+          if (record.id === action.payload.id) {
+            return {
+              ...record,
+              ...action.payload,
+            }
+          }
+
+          return record
+        }),
       }
     default:
       return state

@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
 import RecordForm from "../components/RecordForm"
-import { addRecord } from "../actions/record"
+import { updateRecord } from "../actions/record"
 
 const defaultState = {
   type: 0,
@@ -42,10 +42,10 @@ class SettingsScreen extends React.Component {
     })
   }
 
-  save = async (clear) => {
+  save = async () => {
     try {
-      this.props.dispatch(addRecord(this.state.record))
-      clear()
+      this.props.dispatch(updateRecord(this.state.record))
+      this.props.navigation.goBack()
     } catch (error) {
       console.log(error)
     }

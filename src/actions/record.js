@@ -90,20 +90,28 @@ export const deleteRecord = (record, user) => dispatch => {
 
 export const updateRecord = (record) => dispatch => {
   return (new Promise((resolve, reject) => {
+    const data = {
+      title: record.title,
+      price: record.price,
+      type: record.type === 0 ? "expense" : "income",
+      date: record.date,
+    }
     const records = client.service("records")
-    client.update(record.id, record)
+
+    records.patch(record.id, data, { query: { userId: record.userId } })
       .then(result => {
-        console.log("result")
         dispatch({
           type: UPDATE_RECORD,
           payload: result,
         })
+        resolve(result)
       })
       .catch(error => {
         dispatch({
           type: RECORD_ERROR,
           payload: error,
         })
+        reject(error)
       })
-  })
+  }))
 }
