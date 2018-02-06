@@ -6,13 +6,20 @@ import PropTypes from "prop-types"
 import Picker from "react-native-simple-picker"
 import KeyboardSpacer from "react-native-keyboard-spacer"
 
+import categoriesData from "../util/categories"
+
 const RecordForm = ({ record, save, onChange }) => {
   const clear = () => {
     this.descriptionRef.clear()
     this.priceRef.clear()
   }
+  let categories
 
-  const categories = ["food", "transportation", "shopping"]
+  if (record.type === 0) {
+    categories = categoriesData.expenses
+  } else {
+    categories = categoriesData.incomes
+  }
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -52,8 +59,8 @@ const RecordForm = ({ record, save, onChange }) => {
           <Text>{record.category || "Select Category"}</Text>
         </TOpacity>
         <Picker
-          labels={categories.map(category => category.toUpperCase())}
-          options={categories}
+          labels={categories.labels}
+          options={categories.values}
           ref={ref => this.categoryRef = ref}
           onSubmit={category => onChange("category", category)}
         />
