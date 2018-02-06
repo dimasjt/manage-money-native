@@ -1,9 +1,10 @@
 import React from "react"
 import { ButtonGroup, FormInput, Button, FormLabel, Text } from "react-native-elements"
-import { View, TouchableOpacity as TOpacity } from "react-native"
+import { View, TouchableOpacity as TOpacity, ScrollView } from "react-native"
 import Datepicker from "react-native-datepicker"
 import PropTypes from "prop-types"
 import Picker from "react-native-simple-picker"
+import KeyboardSpacer from "react-native-keyboard-spacer"
 
 const RecordForm = ({ record, save, onChange }) => {
   const clear = () => {
@@ -14,30 +15,36 @@ const RecordForm = ({ record, save, onChange }) => {
   const categories = ["food", "transportation", "shopping"]
 
   return (
-    <View>
+    <ScrollView style={{ flex: 1 }}>
       <ButtonGroup
         onPress={(index) => onChange("type", index)}
         buttons={["Expense", "Income"]}
         selectedIndex={record.type}
       />
 
-      <FormInput
-        placeholder="Description"
-        onChangeText={(val) => onChange("title", val)}
-        inputStyle={{ fontSize: 16, padding: 4 }}
-        textInputRef={(ref) => this.descriptionRef = ref}
-        value={record.title}
-        autoFocus
-      />
+      <View>
+        <FormLabel>Description</FormLabel>
+        <FormInput
+          placeholder="Description"
+          onChangeText={(val) => onChange("title", val)}
+          inputStyle={{ fontSize: 16, padding: 4 }}
+          textInputRef={(ref) => this.descriptionRef = ref}
+          value={record.title}
+          autoFocus
+        />
+      </View>
 
-      <FormInput
-        keyboardType="numeric"
-        onChangeText={(val) => onChange("price", val)}
-        placeholder="Price"
-        inputStyle={{ fontSize: 16, padding: 4 }}
-        textInputRef={(ref) => this.priceRef = ref}
-        value={record.price.toString()}
-      />
+      <View>
+        <FormLabel>Price</FormLabel>
+        <FormInput
+          keyboardType="numeric"
+          onChangeText={(val) => onChange("price", val)}
+          placeholder="Price"
+          inputStyle={{ fontSize: 16, padding: 4 }}
+          textInputRef={(ref) => this.priceRef = ref}
+          value={record.price.toString()}
+        />
+      </View>
 
       <View>
         <FormLabel>Category</FormLabel>
@@ -68,7 +75,9 @@ const RecordForm = ({ record, save, onChange }) => {
         onPress={() => save(clear)}
         style={{ marginTop: 20 }}
       />
-    </View>
+
+      <KeyboardSpacer />
+    </ScrollView>
   )
 }
 
