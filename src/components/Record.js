@@ -1,14 +1,14 @@
 import React from "react"
-import { TouchableOpacity as Touch } from "react-native"
-import { ListItem } from "react-native-elements"
+import { TouchableOpacity as TOpacity, TouchableHighlight as THighlight, View } from "react-native"
+import { Text } from "react-native-elements"
 import Swipeable from "react-native-swipeable"
 import PropTypes from "prop-types"
 import { Ionicons } from "@expo/vector-icons"
 import { connect } from "react-redux"
 
-
 import money from "../util/money"
 import { deleteRecord } from "../actions/record"
+import styles from "../styles/record"
 
 class Record extends React.Component {
   onDelete = () => {
@@ -20,25 +20,39 @@ class Record extends React.Component {
     this.swipeRef.recenter()
   }
 
+  itemTypeStyle = () => {
+    let style = [styles.itemType]
+    if (this.props.record.type === "expense") {
+      return style.concat(styles.itemTypeExpense)
+    } else {
+      return style.concat(styles.itemTypeIncome)
+    }
+  }
+
   render() {
     const { record } = this.props
 
     const rightButtons = [
-      <Touch key={0} style={{ backgroundColor: "#DC3023", flex: 1, padding: 12, paddingLeft: 28 }} onPress={this.onDelete}>
+      <TOpacity key={0} style={{ backgroundColor: "#DC3023", flex: 1, padding: 12, paddingLeft: 28 }} onPress={this.onDelete}>
         <Ionicons name="ios-trash-outline" size={28} style={{ color: "white" }} />
-      </Touch>,
+      </TOpacity>,
     ]
 
     return (
       <Swipeable rightButtons={rightButtons} onRef={ref => this.swipeRef = ref}>
-        <ListItem
-          title={record.title}
-          titleStyle={{ fontSize: 16 }}
-          subtitle={money(record.price)}
+        <THighlight
           onPress={this.onEdit}
+          style={styles.item}
           underlayColor="#eee"
-          hideChevron
-        />
+        >
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <View style={this.itemTypeStyle()}></View>
+            <View style={styles.text}>
+              <Text style={styles.description}>{record.title}</Text>
+              <Text style={styles.price}>{money(record.price)}</Text>
+            </View>
+          </View>
+        </THighlight>
       </Swipeable>
     )
   }
