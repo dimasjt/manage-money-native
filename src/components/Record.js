@@ -1,6 +1,6 @@
 import React from "react"
 import { TouchableOpacity as TOpacity, TouchableHighlight as THighlight, View } from "react-native"
-import { Text } from "react-native-elements"
+import { Text, Avatar } from "react-native-elements"
 import Swipeable from "react-native-swipeable"
 import PropTypes from "prop-types"
 import { Ionicons } from "@expo/vector-icons"
@@ -21,7 +21,7 @@ class Record extends React.Component {
   }
 
   itemTypeStyle = () => {
-    let style = [styles.itemType]
+    let style = [styles.item]
     if (this.props.record.type === "expense") {
       return style.concat(styles.itemTypeExpense)
     } else {
@@ -42,11 +42,15 @@ class Record extends React.Component {
       <Swipeable rightButtons={rightButtons} onRef={ref => this.swipeRef = ref}>
         <THighlight
           onPress={this.onEdit}
-          style={styles.item}
+          style={styles.touch}
           underlayColor="#eee"
         >
-          <View style={{ flex: 1, flexDirection: "row" }}>
-            <View style={this.itemTypeStyle()}></View>
+          <View style={this.itemTypeStyle()}>
+            <Avatar
+              small
+              rounded
+              icon={{ name: "food", type: "material-community" }}
+            />
             <View style={styles.text}>
               <Text style={styles.description}>{record.title}</Text>
               <Text style={styles.price}>{money(record.price)}</Text>
