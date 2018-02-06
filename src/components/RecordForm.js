@@ -1,14 +1,17 @@
 import React from "react"
-import { ButtonGroup, FormInput, Button } from "react-native-elements"
-import { View } from "react-native"
+import { ButtonGroup, FormInput, Button, FormLabel, Text } from "react-native-elements"
+import { View, TouchableOpacity as TOpacity } from "react-native"
 import Datepicker from "react-native-datepicker"
 import PropTypes from "prop-types"
+import Picker from "react-native-simple-picker"
 
 const RecordForm = ({ record, save, onChange }) => {
   const clear = () => {
     this.descriptionRef.clear()
     this.priceRef.clear()
   }
+
+  const categories = ["food", "transportation", "shopping"]
 
   return (
     <View>
@@ -35,6 +38,19 @@ const RecordForm = ({ record, save, onChange }) => {
         textInputRef={(ref) => this.priceRef = ref}
         value={record.price.toString()}
       />
+
+      <View>
+        <FormLabel>Category</FormLabel>
+        <TOpacity onPress={() => this.categoryRef.show()} style={{ padding: 20 }}>
+          <Text>{record.category || "Select Category"}</Text>
+        </TOpacity>
+        <Picker
+          labels={categories.map(category => category.toUpperCase())}
+          options={categories}
+          ref={ref => this.categoryRef = ref}
+          onSubmit={category => onChange("category", category)}
+        />
+      </View>
 
       <View style={{ padding: 10 }}>
         <Datepicker
