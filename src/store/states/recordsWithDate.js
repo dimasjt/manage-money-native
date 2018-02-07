@@ -1,7 +1,20 @@
 import { groupBy, forEach, flatten } from "lodash"
 import moment from "moment"
 
-export default (records) => {
+const filtered = (records, type) => {
+  return records.filter((record) => {
+    switch (type) {
+      case 1:
+        return record.type === "expense"
+      case 2:
+        return record.type === "income"
+      default:
+        return true
+    }
+  })
+}
+
+export default (records, type) => {
   let data = []
   const grouped = groupBy(records, (record) => {
     return moment(record.createdAt).format("YYYY-MM-DD")
@@ -19,5 +32,5 @@ export default (records) => {
     data.push(val)
   })
 
-  return flatten(data)
+  return filtered(flatten(data), type)
 }

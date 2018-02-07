@@ -1,18 +1,14 @@
 import React from "react"
-import { View, FlatList } from "react-native"
-import { ButtonGroup, Text } from "react-native-elements"
+import { View } from "react-native"
+import { ButtonGroup } from "react-native-elements"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import ActionButton from "react-native-action-button"
 
-import Record from "../components/Record"
-import HeaderRecord from "../components/HeaderRecord"
+import RecordList from "../components/RecordsList"
+import MonthReport from "../components/MonthReport"
 
-import { calculateExpenses, calculateIncomes } from "../util/record_calculation"
-import money from "../util/money"
 import { getRecords } from "../actions/record"
-import styles from "../styles/main"
-import recordsWithDate from "../store/states/recordsWithDate";
 
 class MainScreen extends React.Component {
   static navigationOptions = {
@@ -42,49 +38,11 @@ class MainScreen extends React.Component {
     this.setState({ filter: { ...this.state.filter, type: index } })
   }
 
-  filteredRecords = () => {
-    const records = this.props.records.data.filter((record) => {
-      switch (this.state.filter.type) {
-        case 1:
-          return record.type === "expense"
-        case 2:
-          return record.type === "income"
-        default:
-          return true
-      }
-    })
-
-    return recordsWithDate(records)
-  }
-
-  renderItem = ({ item }) => {
-    if (item.isHeader) {
-      return <HeaderRecord header={item} />
-    }
-
-    return <Record record={item} navigation={this.props.navigation} />
-  }
-
   render() {
-    const emptyRecords = (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 20 }}>There are no records.</Text>
-      </View>
-    )
-
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <View style={{ flex: 3, margin: 10 }}>
-          <View style={[{ flexDirection: "row" }, styles.card]}>
-            <View style={styles.cardItem}>
-              <Text h4 style={styles.cardItemText}>Expense</Text>
-              <Text>{money(this.props.totalExpenses)}</Text>
-            </View>
-            <View style={styles.cardItem}>
-              <Text h4 style={styles.cardItemText}>Income</Text>
-              <Text>{money(this.props.totalIncomes)}</Text>
-            </View>
-          </View>
+          <MonthReport />
         </View>
 
         <View style={{ flex: 2, zIndex: 10 }}>
@@ -96,13 +54,10 @@ class MainScreen extends React.Component {
         </View>
 
         <View style={{ flex: 10 }}>
-          <FlatList
-            data={this.filteredRecords()}
-            renderItem={this.renderItem}
-            keyExtractor={(item) => item.id}
-            refreshing={this.props.records.loading}
-            onRefresh={this.getRecords}
-            ListEmptyComponent={emptyRecords}
+          <RecordList
+            navigation={this.props.navigation}
+            filter={this.state.filter}
+            getRecords={this.getRecords}
           />
         </View>
 
@@ -119,12 +74,6 @@ MainScreen.propTypes = {
   records: PropTypes.object,
   user: PropTypes.object,
   navigation: PropTypes.object,
-  totalIncomes: PropTypes.number,
-  totalExpenses: PropTypes.number,
 }
 
-export default connect(state => ({
-  ...state,
-  totalIncomes: calculateIncomes(state.records.data),
-  totalExpenses: calculateExpenses(state.records.data),
-}))(MainScreen)
+export default connect(state => state)(MainScreen)
