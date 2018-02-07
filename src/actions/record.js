@@ -19,6 +19,9 @@ export const getRecords = ({ userId, type }) => dispatch => {
     query: {
       ...query,
       userId: userId,
+      $sort: {
+        createdAt: -1,
+      },
     },
   })
 
