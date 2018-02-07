@@ -6,11 +6,13 @@ import PropTypes from "prop-types"
 import ActionButton from "react-native-action-button"
 
 import Record from "../components/Record"
+import HeaderRecord from "../components/HeaderRecord"
 
 import { calculateExpenses, calculateIncomes } from "../util/record_calculation"
 import money from "../util/money"
 import { getRecords } from "../actions/record"
 import styles from "../styles/main"
+import recordsWithDate from "../store/states/recordsWithDate";
 
 class MainScreen extends React.Component {
   static navigationOptions = {
@@ -41,7 +43,7 @@ class MainScreen extends React.Component {
   }
 
   filteredRecords = () => {
-    return this.props.records.data.filter((record) => {
+    const records = this.props.records.data.filter((record) => {
       switch (this.state.filter.type) {
         case 1:
           return record.type === "expense"
@@ -51,11 +53,17 @@ class MainScreen extends React.Component {
           return true
       }
     })
+
+    return recordsWithDate(records)
   }
 
-  renderItem = ({ item }) => (
-    <Record record={item} navigation={this.props.navigation} />
-  )
+  renderItem = ({ item }) => {
+    if (item.isHeader) {
+      return <HeaderRecord header={item} />
+    }
+
+    return <Record record={item} navigation={this.props.navigation} />
+  }
 
   render() {
     const emptyRecords = (
