@@ -1,5 +1,5 @@
 import React from "react"
-import { View, TouchableOpacity as TOpacity, FlatList } from "react-native"
+import { View, TouchableOpacity as TOpacity } from "react-native"
 import { Text } from "react-native-elements"
 import { Constants } from "expo"
 import Picker from "react-native-simple-picker"
@@ -8,15 +8,22 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
 import styles from "../styles/records"
-import Record from "../components/Record"
+import RecordsList from "../components/RecordsList"
 
 class RecordsScreen extends React.Component {
   state = {
     month: 2,
+    filter: {
+      type: 0,
+    },
   }
 
   monthChange = (opt) => {
     this.setState({ month: opt })
+  }
+
+  getRecords = () => {
+
   }
 
   render() {
@@ -36,12 +43,10 @@ class RecordsScreen extends React.Component {
         </View>
 
         <View style={{ flex: 8 }}>
-          <FlatList
-            data={this.props.records.data}
-            keyExtractor={(item) => item.id}
-            refreshing={this.props.records.loading}
-            onRefresh={this.getRecords}
-            renderItem={({ item }) => <Record record={item} navigation={this.props.navigation} />}
+          <RecordsList
+            getRecords={this.getRecords}
+            navigation={this.props.navigation}
+            filter={this.state.filter}
           />
         </View>
       </View>
