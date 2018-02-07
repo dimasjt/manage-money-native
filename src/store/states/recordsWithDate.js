@@ -3,6 +3,10 @@ import moment from "moment"
 
 const filtered = (records, type) => {
   return records.filter((record) => {
+    if (record.isHeader) {
+      return true
+    }
+
     switch (type) {
       case 1:
         return record.type === "expense"
