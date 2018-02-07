@@ -1,6 +1,6 @@
 import React from "react"
 import { TouchableOpacity as TOpacity, TouchableHighlight as THighlight, View } from "react-native"
-import { Text, Avatar } from "react-native-elements"
+import { Text } from "react-native-elements"
 import Swipeable from "react-native-swipeable"
 import PropTypes from "prop-types"
 import { Ionicons } from "@expo/vector-icons"
