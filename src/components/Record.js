@@ -9,6 +9,7 @@ import { connect } from "react-redux"
 import money from "../util/money"
 import { deleteRecord } from "../actions/record"
 import styles from "../styles/record"
+import { iconCategories } from "../util/categories"
 
 class Record extends React.Component {
   onDelete = () => {
@@ -46,11 +47,7 @@ class Record extends React.Component {
           underlayColor="#eee"
         >
           <View style={this.itemTypeStyle()}>
-            <Avatar
-              small
-              rounded
-              icon={{ name: "food", type: "material-community" }}
-            />
+            {iconCategories(record.category)}
             <View style={styles.text}>
               <Text style={styles.description}>{record.title}</Text>
               <Text style={styles.price}>{money(record.price)}</Text>

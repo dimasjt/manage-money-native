@@ -37,7 +37,6 @@ const RecordForm = ({ record, save, onChange }) => {
           inputStyle={{ fontSize: 16, padding: 4 }}
           textInputRef={(ref) => this.descriptionRef = ref}
           value={record.title}
-          autoFocus
         />
       </View>
 
