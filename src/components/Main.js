@@ -1,7 +1,8 @@
 import React from "react"
-import { AsyncStorage } from "react-native"
+import { AsyncStorage, View } from "react-native"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import { AdMobBanner } from "expo"
 
 import AuthScreen from "../screens/AuthScreen"
 import Routes from "../Routes"
@@ -30,7 +31,17 @@ class Main extends React.Component {
   render() {
     const { user } = this.props
     if (user.logged) {
-      return <Routes />
+      return (
+        <View style={{ flex: 1 }}>
+          <Routes />
+          <AdMobBanner
+            bannerSize="banner"
+            adUnitID="ca-app-pub-3599661132562532/5514515325"
+            testDeviceID="EMULATOR"
+            didFailToReceiveAdWithError={error => console.log(error)}
+          />
+        </View>
+      )
     }
 
     return <AuthScreen />
