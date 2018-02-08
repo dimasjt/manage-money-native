@@ -1,3 +1,4 @@
+import { uniqBy, uniq, compact } from "lodash"
 import {
   RECORD_LIST,
   RECORD_LOADING,
@@ -9,6 +10,7 @@ import {
 const initialState = {
   loading: false,
   data: [],
+  loadedMonths: [],
 }
 
 function records(state = initialState, action) {
@@ -17,7 +19,8 @@ function records(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        data: action.payload,
+        data: uniqBy(state.data.concat(action.payload.data), (r) => r.id),
+        loadedMonths: compact(uniq(state.loadedMonths.concat(action.payload.monthLoaded))),
       }
     case RECORD_LOADING:
       return {

@@ -52,10 +52,14 @@ RecordsList.propTypes = {
   }).isRequired,
 }
 
-export default connect((state, props) => ({
-  ...state,
-  records: {
-    ...state.records,
-    ordered: recordsWithDate(state.records.data, props.filter.type),
-  },
-}))(RecordsList)
+export default connect((state, props) => {
+  // filter by props, default will return all records
+  const propsFilter = props.filterRecords || ((records) => records)
+  return {
+    ...state,
+    records: {
+      ...state.records,
+      ordered: recordsWithDate(propsFilter(state.records.data), props.filter.type),
+    },
+  }
+})(RecordsList)

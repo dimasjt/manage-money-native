@@ -4,6 +4,7 @@ import { ButtonGroup } from "react-native-elements"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import ActionButton from "react-native-action-button"
+import moment from "moment"
 
 import RecordList from "../components/RecordsList"
 import MonthReport from "../components/MonthReport"
@@ -38,6 +39,13 @@ class MainScreen extends React.Component {
     this.setState({ filter: { ...this.state.filter, type: index } })
   }
 
+  // only show records which month is now
+  filterRecords = (records) => {
+    return records.filter(record => {
+      return moment(record.date).month() === moment().month()
+    })
+  }
+
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -58,6 +66,7 @@ class MainScreen extends React.Component {
             navigation={this.props.navigation}
             filter={this.state.filter}
             getRecords={this.getRecords}
+            filterRecords={this.filterRecords}
           />
         </View>
 

@@ -1,3 +1,5 @@
+import moment from "moment"
+
 import {
   RECORD_LIST,
   RECORD_LOADING,
@@ -9,10 +11,22 @@ import {
 
 import client from "../client"
 
-export const getRecords = ({ userId, type }) => dispatch => {
+export const getRecords = ({ userId, type, month }) => dispatch => {
   let query = {}
+  let startDate
   if (type !== 0) {
     query.type = type === 1 ? "expense" : "income"
+  }
+
+  if (month === undefined) {
+    startDate = moment().startOf("month")
+  } else {
+    startDate = moment().set({ month }).startOf("month")
+  }
+
+  query.date = {
+    $gte: startDate.toDate(),
+    $lte: startDate.endOf("month").toDate(),
   }
 
   const records = client.service("records").find({
@@ -33,7 +47,7 @@ export const getRecords = ({ userId, type }) => dispatch => {
     .then(({ data }) => {
       dispatch({
         type: RECORD_LIST,
-        payload: data,
+        payload: { data, monthLoaded: month },
       })
     })
     .catch((error) => {
