@@ -6,25 +6,15 @@ import { Facebook } from "expo"
 import KeyboardSpacer from "react-native-keyboard-spacer"
 import PropTypes from "prop-types"
 
-import client from "../client"
-
-import { userLogged } from "../actions/user"
+import { loginEmail, loginFacebook } from "../actions/user"
 
 class AuthScreen extends React.Component {
   state = {}
 
   login = async () => {
-    const auth = {
-      strategy: "local",
-      ...this.state,
-    }
-
     try {
-      const result = await client.authenticate(auth)
-      const payload = await client.passport.verifyJWT(result.accessToken)
-      const user = await client.service("users").get(payload.userId)
+      await this.props.dispatch(loginEmail(this.state))
 
-      this.props.dispatch(userLogged(user))
       Keyboard.dismiss()
     } catch (error) {
       Alert.alert("Sign in failed", error.message)
@@ -32,9 +22,17 @@ class AuthScreen extends React.Component {
   }
 
   loginFacebook = async () => {
-    const { type, token } = await Facebook.logInWithReadPermissionsAsync("1554473021328051", {
-      permissions: ["public_profile", "email"],
-    })
+    try {
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync("1554473021328051", {
+        permissions: ["public_profile", "email"],
+      })
+
+      await this.props.dispatch(loginFacebook(token))
+
+      Keyboard.dismiss()
+    } catch (error) {
+      Alert.alert("Login with Facebook failed", error.message)
+    }
   }
 
   render() {
